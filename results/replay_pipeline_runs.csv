@@ -1,0 +1,57 @@
+stat,as_of,action,kind,champion_after,alerts,reason
+bat_k,2012,promote,eb,1.0,,no champion yet
+bat_bb,2012,promote,marcel,1.0,,no champion yet
+bat_hr,2012,promote,marcel,1.0,,no champion yet
+pit_k,2012,promote,eb,1.0,,no champion yet
+bat_k,2013,promote,eb,2.0,,incumbent still best
+bat_bb,2013,promote,marcel,2.0,,eb not significantly better than marcel
+bat_hr,2013,promote,marcel,2.0,league_shift,incumbent still best
+pit_k,2013,promote,marcel,2.0,,"marcel beats eb, 95% CI [-0.00054, -0.00001]"
+bat_k,2014,promote,eb,3.0,,incumbent still best
+bat_bb,2014,promote,marcel,3.0,,eb not significantly better than marcel
+bat_hr,2014,promote,marcel,3.0,league_shift,incumbent still best
+pit_k,2014,promote,marcel,3.0,,incumbent still best
+bat_k,2015,promote,eb,4.0,,incumbent still best
+bat_bb,2015,promote,marcel,4.0,,incumbent still best
+bat_hr,2015,promote,marcel,4.0,league_shift,eb not significantly better than marcel
+pit_k,2015,promote,marcel,4.0,,incumbent still best
+bat_k,2016,promote,eb,5.0,,incumbent still best
+bat_bb,2016,promote,marcel,5.0,league_shift,incumbent still best
+bat_hr,2016,promote,marcel,5.0,league_shift,incumbent still best
+pit_k,2016,promote,marcel,5.0,,incumbent still best
+bat_k,2017,promote,eb,6.0,,incumbent still best
+bat_bb,2017,promote,marcel,6.0,,incumbent still best
+bat_hr,2017,promote,marcel,6.0,league_shift,incumbent still best
+pit_k,2017,promote,marcel,6.0,,incumbent still best
+bat_k,2018,promote,eb,7.0,,incumbent still best
+bat_bb,2018,promote,marcel,7.0,,incumbent still best
+bat_hr,2018,promote,marcel,7.0,league_shift,incumbent still best
+pit_k,2018,promote,marcel,7.0,,incumbent still best
+bat_k,2019,promote,eb,8.0,,incumbent still best
+bat_bb,2019,promote,marcel,8.0,,incumbent still best
+bat_hr,2019,promote,marcel,8.0,league_shift,incumbent still best
+pit_k,2019,promote,marcel,8.0,,eb not significantly better than marcel
+bat_k,2020,promote,marcel,9.0,volume_shift,"marcel beats eb, 95% CI [-0.00082, -0.00006]"
+bat_bb,2020,promote,marcel,9.0,"league_shift,volume_shift",incumbent still best
+bat_hr,2020,promote,marcel,9.0,volume_shift,eb not significantly better than marcel
+pit_k,2020,promote,marcel,9.0,volume_shift,incumbent still best
+bat_k,2021,promote,marcel,10.0,volume_shift,eb not significantly better than marcel
+bat_bb,2021,promote,marcel,10.0,"league_shift,volume_shift",eb not significantly better than marcel
+bat_hr,2021,promote,marcel,10.0,"league_shift,volume_shift",eb not significantly better than marcel
+pit_k,2021,promote,marcel,10.0,volume_shift,incumbent still best
+bat_k,2022,promote,eb,11.0,,"eb beats marcel, 95% CI [-0.00079, -0.00014]"
+bat_bb,2022,promote,marcel,11.0,league_shift,incumbent still best
+bat_hr,2022,promote,marcel,11.0,league_shift,incumbent still best
+pit_k,2022,promote,marcel,11.0,,incumbent still best
+bat_k,2023,promote,eb,12.0,,incumbent still best
+bat_bb,2023,promote,marcel,12.0,league_shift,eb not significantly better than marcel
+bat_hr,2023,promote,marcel,12.0,league_shift,incumbent still best
+pit_k,2023,promote,marcel,12.0,,incumbent still best
+bat_k,2024,promote,eb,13.0,,incumbent still best
+bat_bb,2024,promote,marcel,13.0,,incumbent still best
+bat_hr,2024,promote,marcel,13.0,league_shift,incumbent still best
+pit_k,2024,promote,marcel,13.0,,incumbent still best
+bat_k,2025,promote,eb,14.0,,incumbent still best
+bat_bb,2025,promote,marcel,14.0,,eb not significantly better than marcel
+bat_hr,2025,promote,marcel,14.0,,incumbent still best
+pit_k,2025,promote,marcel,14.0,,incumbent still best

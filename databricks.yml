@@ -1,0 +1,35 @@
+# Databricks Asset Bundle. Targets Databricks Free Edition (serverless compute, Unity Catalog).
+#   databricks bundle validate
+#   databricks bundle deploy -t dev
+#   databricks bundle run -t dev mlb_backfill   # one-time: replay 2012-2025 into the workspace
+bundle:
+  name: mlb-mlops-pipeline
+
+include:
+  - resources/*.yml
+
+artifacts:
+  mlbops_wheel:
+    type: whl
+    build: uv build --wheel
+    path: .
+
+variables:
+  catalog:
+    description: Unity Catalog catalog (Free Edition workspaces have `workspace`)
+    default: workspace
+  schema:
+    description: Schema for the registered models and Delta tables
+    default: mlb_mlops
+  alert_email:
+    description: Where job failures and blocking monitoring alerts are sent
+    default: ${workspace.current_user.userName}
+
+targets:
+  dev:
+    mode: development
+    default: true
+  prod:
+    mode: production
+    workspace:
+      root_path: /Workspace/Users/${workspace.current_user.userName}/.bundle/${bundle.name}/prod

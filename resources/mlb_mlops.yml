@@ -1,0 +1,64 @@
+resources:
+  schemas:
+    mlb_mlops:
+      catalog_name: ${var.catalog}
+      name: ${var.schema}
+      comment: MLB projection models, projections, and monitoring tables
+
+  experiments:
+    mlb_mlops:
+      name: /Workspace/Users/${workspace.current_user.userName}/mlb-mlops
+
+  jobs:
+    # Weekly scheduled run. Most weeks it finds no new season and exits after
+    # versioning the data; when a season lands it monitors the old champion,
+    # retrains, gates, promotes, and scores next season's projections.
+    mlb_retrain:
+      name: mlb-retrain-and-monitor
+      schedule:
+        quartz_cron_expression: "0 0 6 ? * MON"
+        timezone_id: UTC
+        pause_status: UNPAUSED
+      email_notifications:
+        on_failure: [ "${var.alert_email}" ]
+      environments:
+        - environment_key: default
+          spec:
+            environment_version: "2"
+            dependencies:
+              - ../dist/*.whl
+      tasks:
+        - task_key: pipeline
+          environment_key: default
+          python_wheel_task:
+            package_name: mlbops
+            entry_point: mlbops
+            parameters: [ "--experiment", "${resources.experiments.mlb_mlops.name}",
+                          "--catalog", "${var.catalog}", "--schema", "${var.schema}", "run" ]
+        # Fails (and emails) when the newest season shows performance decay or rate drift.
+        - task_key: check_alerts
+          depends_on: [ { task_key: pipeline } ]
+          environment_key: default
+          python_wheel_task:
+            package_name: mlbops
+            entry_point: mlbops
+            parameters: [ "--catalog", "${var.catalog}", "--schema", "${var.schema}", "check-alerts" ]
+
+    # Manual: walk forward through past seasons to build the model history.
+    mlb_backfill:
+      name: mlb-backfill-replay
+      environments:
+        - environment_key: default
+          spec:
+            environment_version: "2"
+            dependencies:
+              - ../dist/*.whl
+      tasks:
+        - task_key: replay
+          environment_key: default
+          python_wheel_task:
+            package_name: mlbops
+            entry_point: mlbops
+            parameters: [ "--experiment", "${resources.experiments.mlb_mlops.name}",
+                          "--catalog", "${var.catalog}", "--schema", "${var.schema}",
+                          "replay", "--start", "2012", "--end", "2025" ]

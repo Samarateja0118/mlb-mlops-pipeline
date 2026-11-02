@@ -1,0 +1,35 @@
+# Scheduled run of the whole pipeline on a runner, with a throwaway local MLflow store.
+# It replays the last few seasons so every stage (monitor, gate, register, promote,
+# score) runs end to end each week, and uploads the MLflow store and tables.
+name: pipeline
+on:
+  schedule:
+    - cron: "0 7 * * 1"
+  workflow_dispatch:
+    inputs:
+      start:
+        description: first season to replay
+        default: "2021"
+
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    env:
+      MLBOPS_HOME: ${{ github.workspace }}/.mlbops
+      MLFLOW_DISABLE_AGENT_HINT: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e .
+      - run: mlbops replay --start ${{ inputs.start || '2021' }} --end 2025
+      - run: mlbops report | tee report.txt
+      - run: mlbops check-alerts
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mlbops-run
+          path: |
+            .mlbops/
+            report.txt

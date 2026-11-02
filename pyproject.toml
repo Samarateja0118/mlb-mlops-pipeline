@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mlbops"
+version = "0.1.0"
+description = "MLOps pipeline for MLB player rate projections: MLflow tracking and registry, champion/challenger gate, scheduled retrain, drift and performance monitoring, on Databricks or locally"
+requires-python = ">=3.10"
+dependencies = ["mlflow>=3.1,<4", "pandas>=2", "numpy", "scipy", "pyarrow", "pylahman>=0.7"]
+
+[project.optional-dependencies]
+dev = ["pytest", "ruff"]
+
+[project.scripts]
+mlbops = "mlbops.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 120

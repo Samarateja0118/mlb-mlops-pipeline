@@ -1,0 +1,33 @@
+# Deploys the Databricks bundle on push to main, once the workspace secrets are set:
+#   DATABRICKS_HOST  (e.g. https://dbc-xxxx.cloud.databricks.com)
+#   DATABRICKS_TOKEN (personal access token)
+name: deploy-databricks
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+      DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+    steps:
+      - name: Skip until Databricks secrets exist
+        if: env.DATABRICKS_HOST == ''
+        run: echo "DATABRICKS_HOST not set; skipping deploy."
+      - uses: actions/checkout@v4
+        if: env.DATABRICKS_HOST != ''
+      - uses: actions/setup-python@v5
+        if: env.DATABRICKS_HOST != ''
+        with:
+          python-version: "3.12"
+      - uses: astral-sh/setup-uv@v6
+        if: env.DATABRICKS_HOST != ''
+      - uses: databricks/setup-cli@main
+        if: env.DATABRICKS_HOST != ''
+      - if: env.DATABRICKS_HOST != ''
+        run: |
+          databricks bundle validate -t prod
+          databricks bundle deploy -t prod
