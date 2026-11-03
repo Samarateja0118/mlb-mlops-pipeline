@@ -1,8 +1,12 @@
 # MLB Projections MLOps Pipeline
 
-An end-to-end MLOps pipeline for MLB player rate projections: data versioning, MLflow experiment tracking and model registry, a champion/challenger promotion gate, a scheduled retrain, drift and performance monitoring, and one-command rollback. It runs on **Databricks Free Edition** (serverless jobs, Unity Catalog, managed MLflow) through a Databricks Asset Bundle, and the same code runs locally and in GitHub Actions with a SQLite MLflow store.
+[![ci](https://github.com/Samarateja0118/mlb-mlops-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/Samarateja0118/mlb-mlops-pipeline/actions/workflows/ci.yml)
+
+An end-to-end MLOps pipeline for MLB player rate projections: data versioning, MLflow experiment tracking and model registry, a champion/challenger promotion gate, a scheduled retrain, drift and performance monitoring, and one-command rollback. It is packaged for **Databricks Free Edition** (serverless jobs, Unity Catalog, managed MLflow) as a Databricks Asset Bundle, and the same code runs locally and in GitHub Actions with a SQLite MLflow store. The bundle is written but not yet deployed to a live workspace (see [Status](#deploy-to-databricks-free-edition)).
 
 The models come from [mlb-player-projections](https://github.com/Samarateja0118/mlb-player-projections), which compares a hierarchical Bayesian model against Marcel-style baselines in a one-off backtest. This repo is about operating projections over time: retraining as each season lands, deciding when a new model is good enough to replace the current one, and noticing when the world changes under it.
+
+**At a glance:** replaying 2012-2025 one season at a time produced 56 retrains and 56 registered model versions. The monitors caught the 60-game 2020 season on their own (`volume_shift` fired on all four stats), and the bootstrap gate switched the hitter strikeout model to Marcel on the 2020 holdout and back two seasons later. Details in [Results](#results-replaying-2012-2025).
 
 ## What runs
 
